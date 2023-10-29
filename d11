@@ -1,0 +1,14 @@
+digraph G {
+node [shape=plaintext]
+graph [rankdir=LR]
+disk [label=<
+<table border='0' cellborder='1' cellspacing='0' cellpadding='50'>
+<tr><td colspan='2' bgcolor='lightblue'><b>MBR ocupa el 0.00016021728515625% del disco</b> </td>
+<td colspan='2' bgcolor='lightblue'><b>Partición P</b><br/><b>Ocupa el 33.333333333333336% del disco</b></td>
+<td colspan='2' bgcolor='lightblue'><b>Partición P</b><br/><b>Ocupa el 33.333333333333336% del disco</b></td>
+<td colspan='2' bgcolor='lightblue'><b>Partición P</b><br/><b>Ocupa el 26.666666666666668% del disco</b></td>
+<td colspan='2' bgcolor='lightblue'><b>Partición P</b><br/><b>Ocupa el 0.0% del disco</b></td>
+</tr>
+</table>
+>];
+}

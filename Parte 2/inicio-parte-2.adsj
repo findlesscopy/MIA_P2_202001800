@@ -1,0 +1,49 @@
+#CONFIGURACION INICIAL
+mkdisk -size=112 -unit=M -path="/tmp/parte2/disco.dsk"
+
+fdisk -type=P -unit=M -name="Part1" -size=25 -path="/tmp/parte2/disco.dsk"
+fdisk -type=P -unit=M -name="Part2" -size=25 -path="/tmp/parte2/disco.dsk"
+fdisk -type=P -unit=M -name="Part3" -size=25 -path="/tmp/parte2/disco.dsk"
+fdisk -type=P -unit=M -name="Part4" -size=25 -path="/tmp/parte2/disco.dsk"
+
+mount -path="/tmp/parte2/disco.dsk" -name="Part1" 
+mount -path="/tmp/parte2/disco.dsk" -name="Part2" 
+mount -path="/tmp/parte2/disco.ds"k -name="Part3" 
+mount -path="/tmp/parte2/disco.dsk" -name="Part4" 
+
+#MKFS A PARTICIONES
+mkfs -type=full -id="001disco"
+
+#REPORTES INICIALES
+rep -id="001disco" -path="/home/parte2/inicial/ext2_sb_1.pdf" -name=sb
+
+#INICIO DE SESION
+
+#Debe dar error porque no existe el usuario roca
+login -pass="567" -user="roca" -id="001disco"
+#Debe dar error porque no existe nada activo
+logout
+
+login -pass="123" -user="root" -id="001disco"
+
+pause
+
+#CREACION DE GRUPOS
+mkgrp -name="Archivos"
+mkgrp -name="Arqui"
+mkgrp -name="Orga"
+mkgrp -name="Compi 2"
+
+#ELIMINACION DE GRUPOS
+rmgrp -name="Arqui"
+
+#CREACION DE USUARIOS
+mkusr -user="user1" -grp="root" -pass="user1"
+mkusr -user="user2" -grp="Compi 2" -pass=user2
+mkusr -user="user3" -grp="Compi 2" -pass=user3
+mkusr -user="user4" -grp="Compi 2" -pass=user4
+
+#ELIMINACION DE USUARIOS
+rmusr -user="user3"
+
+logout
