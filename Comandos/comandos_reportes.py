@@ -214,12 +214,23 @@ def cmd_reporte_disk(path, id):
     dot += ">];\n"
     dot += "}"
 
-    # nombre_archivo = os.path.splitext(os.path.basename(path))[0]
-    # graph = graphviz.Source(dot)
-    # graph.render(nombre_archivo, format='svg', )
-    #salida.append(dot)
-    print("\t> REP: Reporte disk generado")
-    salida.append("REP: Reporte disk generado")
+    nombre_archivo = os.path.splitext(os.path.basename(path))[0]
+    graph = graphviz.Source(dot)
+    
+    nombre_archivo = os.path.splitext(os.path.basename(path))[0]
+    graph = graphviz.Source(dot)
+    graph.render(nombre_archivo, format='svg')
+    s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+    try: 
+        s3.upload_file(nombre_archivo + ".svg", bucket_name, "reportes/"+nombre_archivo + ".svg")
+        print("\t> REP: Reporte disk generado")
+        salida.append("REP: Reporte disk generado")
+        response = jsonify({'response': 'Reporte disk subido a S3'})
+    except Exception as e:
+        print("\t> ERROR: Reporte disk no generado")
+        salida.append("ERROR: Reporte disk no generado")
+        response = jsonify({'response': 'Reporte disk no subido a S3'})
+    return response
 
 def cmd_reporte_super_bloque(path, id):
     size_bloques_carpetas = len(bytes(BloquesCarpetas()))
