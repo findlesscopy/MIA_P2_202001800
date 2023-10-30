@@ -92,7 +92,7 @@ def cmd_reporte_mbr(path, id):
     graph = graphviz.Source(dot)
     graph.render(nombre_archivo, format='svg')
     s3 = boto3.resource('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-    s3.upload_file(nombre_archivo + ".svg", bucket_name, nombre_archivo + ".svg")
+    s3.upload_file(nombre_archivo + ".svg", bucket_name, "/reportes/"+nombre_archivo + ".svg")
     #salida.append(dot)
 
     print("\t> REP: Reporte mbr generado")
