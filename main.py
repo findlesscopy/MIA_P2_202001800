@@ -28,5 +28,11 @@ def execute():
 
     return jsonify(salida)
 
+@app.route('/ping', methods=['GET'])
+@cross_origin()
+def ping():
+    return jsonify({'response': 'pong!'})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
