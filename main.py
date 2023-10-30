@@ -17,9 +17,9 @@ def execute():
         #print ("ESTA ES LA LINEA")
         parse(line)
 
-   #print("SALIDA GENERADA", salida)
-
-    return jsonify({'message':salida})
+    #print("SALIDA GENERADA", salida)
+    print(jsonify(salida))
+    return jsonify(salida)
 
 @app.route('/ping', methods=['GET'])
 @cross_origin()
