@@ -38,7 +38,7 @@ def cmd_reporte_mbr(path, id):
     if esta == False:
         print("\tERROR: No se encontro la particion montada.")
         salida.append("ERROR: No se encontro la particion montada.")
-        return 
+        return jsonify({'response': 'No se encontro la particion montada.'})
 
     dot = "digraph G {\n"
     dot += "node [shape=plaintext]\n"
