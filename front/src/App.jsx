@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { GraphContext } from './GraphContext';
 
+
 function App() {
   const [fileContent, setFileContent] = useState("");
   const [consolita, setConsola] = useState("");
@@ -38,6 +39,7 @@ function App() {
     handleSaveFile(fileContent);
   }
 
+  
   const interpretar = async () => {
     console.log("Ejecutando...");
     try {
@@ -48,15 +50,34 @@ function App() {
         console.log("Error: No hay codigo para ejecutar");
       } else {
         //console.log(fileContent);
-        const response = await axios.post(
-          "http://localhost:5000/execute",
-          { entrada: fileContent }
-        );
-        console.log(response.data);
-        //convertir a string la respuesta
-        const respuestaString = response.data.map((mensaje) => mensaje).join("\n");
+        const lines = fileContent.split("\n");
+        const respuestas = [];
 
-        setConsola(respuestaString);
+        for (const line of lines) {
+          if (line.trim() !== '') {
+            console.log(line);
+            if(line === "pause"){
+              // esperar enter
+              await new Promise(r => setTimeout(r, 10000));
+
+            }
+            const response = await axios.post(
+               "http://localhost:5000/execute",
+               { entrada: line }
+             );
+             const respuestaString = response.data.map((mensaje) => mensaje).join("\n");
+
+             setConsola(respuestaString);
+             //espera 1 segundo
+              await new Promise(r => setTimeout(r, 200));
+          }
+        }
+
+        // console.log(respuestas);
+        // //convertir a string la respuesta
+        // const respuestaString = respuestas.map((mensaje) => mensaje).join("\n");
+
+        // setConsola(respuestaString);
 
       }
     } catch (error) {

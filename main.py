@@ -2,6 +2,14 @@ from Analizadores.analizador_sintactico import parse
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from utils import *
+import boto3
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+aws_access_key_id = os.getenv("KEY_ID")
+aws_secret_access_key = os.getenv("SECRET_KEY")
+bucket_name = os.getenv("BUCKET_NAME")
 
 app = Flask(__name__)
 CORS(app)

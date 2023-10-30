@@ -84,7 +84,7 @@ def cmd_reporte_mbr(path, id):
     # nombre_archivo = os.path.splitext(os.path.basename(path))[0]
     # graph = graphviz.Source(dot)
     # graph.render(nombre_archivo, format='svg')
-    salida.append(dot)
+    #salida.append(dot)
 
     print("\t> REP: Reporte mbr generado")
     salida.append("REP: Reporte mbr generado")
@@ -198,7 +198,7 @@ def cmd_reporte_disk(path, id):
     # nombre_archivo = os.path.splitext(os.path.basename(path))[0]
     # graph = graphviz.Source(dot)
     # graph.render(nombre_archivo, format='svg', )
-    salida.append(dot)
+    #salida.append(dot)
     print("\t> REP: Reporte disk generado")
     salida.append("REP: Reporte disk generado")
 

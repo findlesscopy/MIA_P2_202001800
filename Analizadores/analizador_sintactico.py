@@ -4,6 +4,7 @@ import Comandos.comandos_generales
 from Comandos.comandos_disco import *
 from Comandos.comandos_reportes import *
 from Comandos.comandos_usuarios import *
+from utils import *
 
 precedence = ()
 
@@ -41,7 +42,8 @@ def p_commands(t):
     t[0] = t[1]
 
 def cmd_pause():
-    input("\t> PAUSE: Presione enter para continuar...")
+    print("\t> PAUSE: Presione enter para continuar...")
+    salida.append("> PAUSE: Presione enter para continuar...")
     return
 
 def p_command_pause(t):
