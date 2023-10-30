@@ -100,6 +100,7 @@ def cmd_reporte_mbr(path, id):
         s3.upload_file(nombre_archivo + ".svg", bucket_name, "reportes/"+nombre_archivo + ".svg")
         print("\t> REP: Reporte mbr generado")
         salida.append("REP: Reporte mbr generado")
+        images.append(nombre_archivo + ".svg")
         response = jsonify({'response': 'Reporte mbr subido a S3'})
     except Exception as e:
         print("\t> ERROR: Reporte mbr no generado")
@@ -225,6 +226,7 @@ def cmd_reporte_disk(path, id):
         s3.upload_file(nombre_archivo + ".svg", bucket_name, "reportes/"+nombre_archivo + ".svg")
         print("\t> REP: Reporte disk generado")
         salida.append("REP: Reporte disk generado")
+        images.append(nombre_archivo + ".svg")
         response = jsonify({'response': 'Reporte disk subido a S3'})
     except Exception as e:
         print("\t> ERROR: Reporte disk no generado")
