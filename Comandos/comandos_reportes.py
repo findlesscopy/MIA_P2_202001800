@@ -14,7 +14,7 @@ from flask_cors import CORS, cross_origin
 load_dotenv()
 aws_access_key_id = os.getenv("KEY_ID")
 aws_secret_access_key = os.getenv("SECRET_KEY")
-bucket_name = os.getenv("BUCKET_NAME")
+bucket_name = "front-proyecto2-mia-202001800"
 
 @cross_origin()
 def cmd_reporte_mbr(path, id):
