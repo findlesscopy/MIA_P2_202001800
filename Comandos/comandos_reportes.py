@@ -8,6 +8,7 @@ from utils import *
 import boto3
 import os
 import graphviz
+from flask import jsonify
 from dotenv import load_dotenv
 from flask_cors import CORS, cross_origin
 
@@ -96,12 +97,15 @@ def cmd_reporte_mbr(path, id):
     graph.render(nombre_archivo, format='svg')
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
     try: 
-        s3.upload_file(nombre_archivo + ".svg", bucket_name, "/reportes/"+nombre_archivo + ".svg")
+        s3.upload_file(nombre_archivo + ".svg", bucket_name, "reportes/"+nombre_archivo + ".svg")
         print("\t> REP: Reporte mbr generado")
         salida.append("REP: Reporte mbr generado")
+        response = jsonify({'response': 'Reporte mbr subido a S3'})
     except Exception as e:
         print("\t> ERROR: Reporte mbr no generado")
         salida.append("ERROR: Reporte mbr no generado")
+        response = jsonify({'response': 'Reporte mbr no subido a S3'})
+    return response
 
 
 
