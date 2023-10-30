@@ -5,8 +5,15 @@ from Estructuras.SuperBloque import *
 from Estructuras.Bloques import *
 from Estructuras.Inodos import *
 from utils import *
+import boto3
 import os
 import graphviz
+from dotenv import load_dotenv
+
+load_dotenv()
+aws_access_key_id = os.getenv("KEY_ID")
+aws_secret_access_key = os.getenv("SECRET_KEY")
+bucket_name = os.getenv("BUCKET_NAME")
 
 def cmd_reporte_mbr(path, id):
     print("\t> REP: Generando reporte mbr...")
@@ -81,9 +88,11 @@ def cmd_reporte_mbr(path, id):
     dot += ">];\n"
     dot += "}"
 
-    # nombre_archivo = os.path.splitext(os.path.basename(path))[0]
-    # graph = graphviz.Source(dot)
-    # graph.render(nombre_archivo, format='svg')
+    nombre_archivo = os.path.splitext(os.path.basename(path))[0]
+    graph = graphviz.Source(dot)
+    graph.render(nombre_archivo, format='svg')
+    s3 = boto3.resource('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+    s3.upload_file(nombre_archivo + ".svg", bucket_name, nombre_archivo + ".svg")
     #salida.append(dot)
 
     print("\t> REP: Reporte mbr generado")

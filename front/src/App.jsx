@@ -62,7 +62,7 @@ function App() {
 
             }
             const response = await axios.post(
-               "http://localhost:5000/execute",
+              "http://3.128.198.148/execute",
                { entrada: line }
              );
              const respuestaString = response.data.map((mensaje) => mensaje).join("\n");
