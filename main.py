@@ -21,6 +21,12 @@ def execute():
     print(jsonify(salida))
     return jsonify(salida)
 
+@app.route('/reportes', methods=['get'])
+@cross_origin()
+def reportes():
+    print(images)
+    return jsonify(images)
+
 @app.route('/ping', methods=['GET'])
 @cross_origin()
 def ping():
