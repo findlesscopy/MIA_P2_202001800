@@ -9,13 +9,16 @@ import boto3
 import os
 import graphviz
 from dotenv import load_dotenv
+from flask_cors import CORS, cross_origin
 
 load_dotenv()
 aws_access_key_id = os.getenv("KEY_ID")
 aws_secret_access_key = os.getenv("SECRET_KEY")
 bucket_name = os.getenv("BUCKET_NAME")
 
+@cross_origin()
 def cmd_reporte_mbr(path, id):
+    
     print("\t> REP: Generando reporte mbr...")
     salida.append("REP: Generando reporte mbr...")
     #buscar en particiones montadas el id
