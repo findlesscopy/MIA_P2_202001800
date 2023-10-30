@@ -94,7 +94,7 @@ def cmd_reporte_mbr(path, id):
     nombre_archivo = os.path.splitext(os.path.basename(path))[0]
     graph = graphviz.Source(dot)
     graph.render(nombre_archivo, format='svg')
-    s3 = boto3.resource('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+    s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
     s3.upload_file(nombre_archivo + ".svg", bucket_name, "/reportes/"+nombre_archivo + ".svg")
     #salida.append(dot)
 
