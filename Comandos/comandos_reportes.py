@@ -95,11 +95,14 @@ def cmd_reporte_mbr(path, id):
     graph = graphviz.Source(dot)
     graph.render(nombre_archivo, format='svg')
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-    s3.upload_file(nombre_archivo + ".svg", bucket_name, "/reportes/"+nombre_archivo + ".svg")
-    #salida.append(dot)
+    try: 
+        s3.upload_file(nombre_archivo + ".svg", bucket_name, "/reportes/"+nombre_archivo + ".svg")
+        print("\t> REP: Reporte mbr generado")
+        salida.append("REP: Reporte mbr generado")
+    except Exception as e:
+        print("\t> ERROR: Reporte mbr no generado")
+        salida.append("ERROR: Reporte mbr no generado")
 
-    print("\t> REP: Reporte mbr generado")
-    salida.append("REP: Reporte mbr generado")
 
 
 def leer_ebr_desde_archivo(path, inicio):
