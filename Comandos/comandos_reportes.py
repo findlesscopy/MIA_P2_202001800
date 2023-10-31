@@ -94,13 +94,13 @@ def cmd_reporte_mbr(path, id):
 
     nombre_archivo = os.path.splitext(os.path.basename(path))[0]
     graph = graphviz.Source(dot)
-    graph.render(nombre_archivo, format='svg')
+    graph.render(nombre_archivo, format='png')
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
     try: 
-        s3.upload_file(nombre_archivo + ".svg", bucket_name, "reportes/"+nombre_archivo + ".svg")
+        s3.upload_file(nombre_archivo + ".png", bucket_name, "reportes/"+nombre_archivo + ".png")
         print("\t> REP: Reporte mbr generado")
         salida.append("REP: Reporte mbr generado")
-        images.append(nombre_archivo + ".svg")
+        images.append(nombre_archivo + ".png")
         response = jsonify({'response': 'Reporte mbr subido a S3'})
     except Exception as e:
         print("\t> ERROR: Reporte mbr no generado")
@@ -220,13 +220,13 @@ def cmd_reporte_disk(path, id):
     
     nombre_archivo = os.path.splitext(os.path.basename(path))[0]
     graph = graphviz.Source(dot)
-    graph.render(nombre_archivo, format='svg')
+    graph.render(nombre_archivo, format='png')
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
     try: 
-        s3.upload_file(nombre_archivo + ".svg", bucket_name, "reportes/"+nombre_archivo + ".svg")
+        s3.upload_file(nombre_archivo + ".png", bucket_name, "reportes/"+nombre_archivo + ".png")
         print("\t> REP: Reporte disk generado")
         salida.append("REP: Reporte disk generado")
-        images.append(nombre_archivo + ".svg")
+        images.append(nombre_archivo + ".png")
         response = jsonify({'response': 'Reporte disk subido a S3'})
     except Exception as e:
         print("\t> ERROR: Reporte disk no generado")
