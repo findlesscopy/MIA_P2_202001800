@@ -311,13 +311,26 @@ def cmd_reporte_super_bloque(path, id):
         dot += "</table>\n"
         dot += ">];\n"
         dot += "}"
-        #print(dot)
-        # nombre_archivo = os.path.splitext(os.path.basename(path))[0]
-        # graph = graphviz.Source(dot)
-        # graph.render(nombre_archivo, format='svg')
-        salida.append(dot)
-        print("\t> REP: Reporte super_bloque generado")
-        salida.append("REP: Reporte super_bloque generado")
+
+        nombre_archivo = os.path.splitext(os.path.basename(path))[0]
+        graph = graphviz.Source(dot)
+        
+        nombre_archivo = os.path.splitext(os.path.basename(path))[0]
+        graph = graphviz.Source(dot)
+        graph.render(nombre_archivo, format='png')
+        s3 = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+        try: 
+            s3.upload_file(nombre_archivo + ".png", bucket_name, "reportes/"+nombre_archivo + ".png")
+            print("\t> REP: Reporte SB generado")
+            salida.append("REP: Reporte SB generado")
+            images.append(nombre_archivo + ".png")
+            response = jsonify({'response': 'Reporte SB subido a S3'})
+        except Exception as e:
+            print("\t> ERROR: Reporte SB no generado")
+            salida.append("ERROR: Reporte SB no generado")
+            response = jsonify({'response': 'Reporte SB no subido a S3'})
+        return response
+
     except Exception as e:
         print(e)
         return False

@@ -3,6 +3,7 @@ from Estructuras.Bloques import *
 from Estructuras.MBR import *
 from Global.Global import *
 from Estructuras.SuperBloque import *
+from utils import *
 
 actualSesion = Sesion()
 logueado = UsuarioActivo()
@@ -98,6 +99,7 @@ def cmd_login(user, password, id):
                 in_ = get_elements(line, ',')
                 if in_[3] == user and in_[4]:
                     print("\tLOGIN: Usuario ", user, " logueado correctamente")
+                    salida.append("LOGIN: Usuario " + user +" logueado correctamente")
                     global logueado
                     logueado.id = id
                     logueado.user = user
@@ -106,9 +108,11 @@ def cmd_login(user, password, id):
 
                     return True
         print("\tLOGIN: Usuario ", user, " no encontrado")
+        salida.append("LOGIN: Usuario " + user +" no encontrado")
         return False
     except Exception as e:
         print("\tLOGIN: Error al leer el archivo de usuarios")
+        salida.append("LOGIN: Error al leer el archivo de usuarios")
         return False
 
 
@@ -127,12 +131,14 @@ def get_elements(txt, c):
 
     if not v:
         print("\tERROR: no existe un archivo")
+        salida.append("ERROR: no existe un archivo")
 
     return v
 
 def cmd_logout():
     global logueado
     print("\tLOGOUT: Usuario ", logueado.user, " deslogueado correctamente")
+    salida.append("LOGOUT: Usuario " + logueado.user +" deslogueado correctamente")
     global actualSesion
     logueado = UsuarioActivo()
     actualSesion = Sesion()
@@ -145,6 +151,7 @@ def cmd_mkgrp(nombre):
         global logueado 
         if not logueado.user == "root":
             print("\tMKGRP: No se puede crear el grupo, no tiene permisos de administrador")
+            salida.append("MKGRP: No se puede crear el grupo, no tiene permisos de administrador")
             return False
         
         id_particion = ""
@@ -215,6 +222,7 @@ def cmd_mkgrp(nombre):
                         pass
                     else:
                         print("\tMKGRP: No se puede crear el grupo, ya existe un grupo con el nombre ", nombre)
+                        salida.append("MKGRP: No se puede crear el grupo, ya existe un grupo con el nombre " + nombre)
                         return False
             else:
                 txttmp += line + '\n'
@@ -224,13 +232,17 @@ def cmd_mkgrp(nombre):
 
         print("ESTE ES EL TXTTMP ", fb.b_content)
         print("-----------------------")
+        salida.append("ESTE ES EL TXTTMP " + fb.b_content)
+        salida.append("-----------------------")
         with open(path_particion, "rb+") as wfile:
             wfile.seek(super_tmp.s_block_start + size_bloques_carpetas)
             wfile.write(bytes(fb))
             print("\tMKGRP: Grupo ", nombre, " creado correctamente")
+            salida.append("MKGRP: Grupo " + nombre +" creado correctamente")
 
     except Exception as e:
         print("\tMKGRP: Error al leer el archivo de usuarios")
+        salida.append("MKGRP: Error al leer el archivo de usuarios")
         return False
 
 def cmd_rmgrp(nombre):
@@ -239,7 +251,8 @@ def cmd_rmgrp(nombre):
     try:
         global logueado 
         if not logueado.user == "root":
-            print("\tMKGRP: No se puede crear el grupo, no tiene permisos de administrador")
+            print("\tRMGRP: No se puede crear el grupo, no tiene permisos de administrador")
+            salida.append("RMGRP: No se puede crear el grupo, no tiene permisos de administrador")
             return False
         
         id_particion = ""
@@ -315,6 +328,7 @@ def cmd_rmgrp(nombre):
 
         if not exist:
             print("\tRMGRP: No se puede eliminar el grupo, no existe un grupo con el nombre ", nombre)
+            salida.append("RMGRP: No se puede eliminar el grupo, no existe un grupo con el nombre " + nombre)
             return False
         
         fb.b_content = txttmp
@@ -322,9 +336,11 @@ def cmd_rmgrp(nombre):
             wfile.seek(super_tmp.s_block_start + size_bloques_carpetas)
             wfile.write(bytes(fb))
             print("\tRMGRP: Grupo ", nombre, " eliminado correctamente")
+            salida.append("RMGRP: Grupo " + nombre +" eliminado correctamente")
 
     except Exception as e:
         print("\tRMGRP: Error al leer el archivo de usuarios")
+        salida.append("RMGRP: Error al leer el archivo de usuarios")
         return False
     
 def cmd_mkusr(user, pwd, grp):
@@ -333,7 +349,8 @@ def cmd_mkusr(user, pwd, grp):
     try:
         global logueado 
         if not logueado.user == "root":
-            print("\tMKGRP: No se puede crear el grupo, no tiene permisos de administrador")
+            print("\tMKUSR: No se puede crear el grupo, no tiene permisos de administrador")
+            salida.append("MKUSR: No se puede crear el grupo, no tiene permisos de administrador")
             return False
         
         id_particion = ""
@@ -400,6 +417,7 @@ def cmd_mkusr(user, pwd, grp):
                 in_ = get_elements(line, ',')
                 if in_[3] == user:
                     print("\tMKUSR: No se puede crear el usuario, ya existe un usuario con el nombre ", user)
+                    salida.append("MKUSR: No se puede crear el usuario, ya existe un usuario con el nombre " + user)
                     return False
                 else:
                     txttmp += line + '\n'
@@ -415,9 +433,11 @@ def cmd_mkusr(user, pwd, grp):
             wfile.seek(super_tmp.s_block_start + size_bloques_carpetas)
             wfile.write(bytes(fb))
             print("\tMKUSR: Usuario ", user, " creado correctamente")
+            salida.append("MKUSR: Usuario " + user +" creado correctamente")
             
     except Exception as e:
         print("\tMKUSR: Error al leer el archivo de usuarios")
+        salida.append("MKUSR: Error al leer el archivo de usuarios")
         return False
     
 def cmd_rmusr(nombre):
@@ -427,6 +447,7 @@ def cmd_rmusr(nombre):
         global logueado 
         if not logueado.user == "root":
             print("\RMUSR: No se puede eliminar el grupo, no tiene permisos de administrador")
+            salida.append("RMUSR: No se puede eliminar el grupo, no tiene permisos de administrador")
             return False
         
         id_particion = ""
@@ -502,6 +523,7 @@ def cmd_rmusr(nombre):
         #print(exist)
         if not exist:
             print("\tRMUSR: No se puede eliminar el usuario, no existe un usuario con el nombre ", nombre)
+            salida.append("RMUSR: No se puede eliminar el usuario, no existe un usuario con el nombre " + nombre)
             return False
         
         fb.b_content = txttmp
@@ -509,9 +531,12 @@ def cmd_rmusr(nombre):
             wfile.seek(super_tmp.s_block_start + size_bloques_carpetas)
             wfile.write(bytes(fb))
             print("\tRMUSR: Usuario ", nombre, " eliminado correctamente")
+            salida.append("RMUSR: Usuario " + nombre +" eliminado correctamente")
+
 
     except Exception as e:
         print("\tRMUSR: Error al leer el archivo de usuarios")
+        salida.append("RMUSR: Error al leer el archivo de usuarios")
         print(e)
         return False
     
